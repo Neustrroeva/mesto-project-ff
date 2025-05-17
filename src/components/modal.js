@@ -1,22 +1,11 @@
 function openPopup(popup) {
-  popup.classList.add("popup_is-animated");
-  popup.style.display = "flex";
-
-  setTimeout(() => {
-    popup.classList.add("popup_is-opened");
-    popup.classList.remove("popup_is-animated");
-  }, 10);
-
+  popup.classList.add("popup_is-opened");
   document.addEventListener("keydown", handleEscClose);
 }
 
 function closePopup(popup) {
-  popup.classList.add("popup_is-animated");
+  popup.classList.remove("popup_is-opened");
   document.removeEventListener("keydown", handleEscClose);
-
-  setTimeout(() => {
-    popup.classList.remove("popup_is-opened");
-  }, 300);
 }
 
 function handleEscClose(evt) {

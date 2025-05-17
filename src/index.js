@@ -33,20 +33,21 @@ const linkInput = addCardForm.querySelector(".popup__input_type_url");
 
 editProfileButton.addEventListener("click", openEditPopup);
 addCardButton.addEventListener("click", () => openPopup(newCardPopup));
-editForm.addEventListener("submit", handleFormSubmit);
+editForm.addEventListener("submit", handleProfileFormSubmit);
 addCardForm.addEventListener("submit", handleAddCardSubmit);
 
-closeButtons.forEach((button) => {
-  const popup = button.closest(".popup");
-  button.addEventListener("click", () => closePopup(popup));
-});
-
 popups.forEach((popup) => {
+  popup.classList.add("popup_is-animated");
   popup.addEventListener("mousedown", (evt) => {
     if (evt.target === popup) {
       closePopup(popup);
     }
   });
+});
+
+closeButtons.forEach((button) => {
+  const popup = button.closest(".popup");
+  button.addEventListener("click", () => closePopup(popup));
 });
 
 function openEditPopup() {
@@ -56,7 +57,7 @@ function openEditPopup() {
   openPopup(editPopup);
 }
 
-function handleFormSubmit(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
 
   const newName = nameInput.value;
