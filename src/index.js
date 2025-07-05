@@ -27,6 +27,7 @@ const editPopup = document.querySelector(".popup_type_edit");
 const newCardPopup = document.querySelector(".popup_type_new-card");
 const avatarPopup = document.querySelector(".popup_type_edit-avatar"); 
 const popups = document.querySelectorAll(".popup");
+const imagePopup = document.querySelector(".popup_type_image");
 
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
@@ -61,10 +62,10 @@ Promise.all([getUserInfo(), getInitialCards()])
     profileDescription.textContent = userData.about;
     profileImage.style.backgroundImage = `url(${userData.avatar})`;
 
-    cards.reverse().forEach((cardData) => {
-      const cardElement = createCard(cardData, userId);
+    for (let i = cards.length - 1; i >= 0; i--) {
+      const cardElement = createCard(cards[i], userId);
       cardsList.append(cardElement);
-    });
+    }
   })
   .catch((err) => console.log(err));
 
@@ -96,7 +97,9 @@ closeButtons.forEach((btn) => {
 
 editForm.addEventListener("submit", function (evt) {
   evt.preventDefault();
-  const saveButton = editForm.querySelector(".popup__button");
+
+  const form = evt.target;
+  const saveButton = evt.submitter || form.querySelector('[type="submit"]');
   const originalText = saveButton.textContent;
   saveButton.textContent = "Сохранение...";
 
@@ -106,7 +109,7 @@ editForm.addEventListener("submit", function (evt) {
       profileDescription.textContent = data.about;
       closePopup(editPopup);
     })
-    .catch((err) => console.log(err))
+    .catch((err) => console.error(err))
     .finally(() => {
       saveButton.textContent = originalText;
     });
@@ -157,5 +160,16 @@ popups.forEach((popup) => {
     }
   });
 });
+
+function openImagePopup(name, link) {
+  const photoPopupImage = imagePopup.querySelector(".popup__image");
+  const captionPopupImage = imagePopup.querySelector(".popup__caption");
+
+  photoPopupImage.src = link;
+  photoPopupImage.alt = name;
+  captionPopupImage.textContent = name;
+
+  openPopup(imagePopup);
+}
 
 enableValidation(validationConfig);

@@ -12,15 +12,26 @@ function hideInputError(formElement, inputElement, config) {
   errorElement.textContent = '';
 }
 
-function getCustomError(inputElement) {
-  return inputElement.validity.patternMismatch
-    ? inputElement.dataset.errorRegex
-    : inputElement.validationMessage;
-}
-
 function checkInputValidity(formElement, inputElement, config) {
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, getCustomError(inputElement), config);
+  inputElement.setCustomValidity('');
+
+  const { pattern, errorRegex, errorUrl } = inputElement.dataset;
+  const isTextInput = inputElement.type === 'text' || inputElement.type === 'search';
+  const isUrlInput = inputElement.type === 'url';
+
+  if (pattern && isTextInput) {
+    const regex = new RegExp(pattern);
+    if (!regex.test(inputElement.value)) {
+      inputElement.setCustomValidity(errorRegex || 'Недопустимый формат');
+    }
+  }
+
+  if (isUrlInput && inputElement.validity.typeMismatch) {
+    inputElement.setCustomValidity(errorUrl || 'Введите корректный URL');
+  }
+
+  if (!inputElement.checkValidity()) {
+    showInputError(formElement, inputElement, inputElement.validationMessage, config);
   } else {
     hideInputError(formElement, inputElement, config);
   }

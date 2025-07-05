@@ -47,7 +47,7 @@
         <div class="popup__content">
           <button type="button" class="popup__close"></button>
           <h3 class="popup__title">Редактировать профиль</h3>
-          <form id="profile-form" class="popup__form" name="edit-profile">
+          <form id="profile-form" class="popup__form" name="edit-profile" novalidate>
             <input
               id="profile-name"
               type="text"
@@ -56,7 +56,7 @@
               placeholder="Имя"
               minlength="2"
               maxlength="40"
-              pattern="^[A-Za-zА-ЯЁа-яё\s-]+$"
+              data-pattern="^[A-Za-zА-ЯЁа-яё\s-]+$"
               data-error-regex="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
               required
             />
@@ -69,6 +69,8 @@
               placeholder="Занятие"
               minlength="2"
               maxlength="200"
+              data-pattern="^[A-Za-zА-ЯЁа-яё\s-]+$"
+              data-error-regex="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
               required
             />
             <span class="popup__error profile-description-error"></span>
@@ -82,7 +84,7 @@
         <div class="popup__content">
           <button type="button" class="popup__close"></button>
           <h3 class="popup__title">Новое место</h3>
-          <form id="card-form" class="popup__form" name="new-place">
+          <form id="card-form" class="popup__form" name="new-place" novalidate>
             <input
               id="place-title"
               type="text"
@@ -91,7 +93,7 @@
               minlength="2"
               maxlength="30"
               placeholder="Название"
-              pattern="^[A-Za-zА-ЯЁа-яё\s-]+$"
+              data-pattern="^[A-Za-zА-ЯЁа-яё\s-]+$"
               data-error-regex="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
               required
             />
@@ -102,6 +104,7 @@
               name="link"
               class="popup__input popup__input_type_url"
               placeholder="Ссылка на картинку"
+              data-error-url="Введите корректный URL (с http/https)"
               required
             />
             <span class="popup__error place-link-error"></span>
@@ -122,13 +125,14 @@
         <div class="popup__content">
           <button type="button" class="popup__close"></button>
           <h3 class="popup__title">Обновить аватар</h3>
-          <form name="edit-avatar" class="popup__form">
+          <form name="edit-avatar" class="popup__form" novalidate>
             <input
               id="avatar-link"
               type="url"
               name="avatar-link"
               class="popup__input popup__input_type_avatar-link"
               placeholder="Ссылка на картинку"
+              data-error-url="Введите корректный URL (с http/https)"
               required
             />
             <span class="popup__error avatar-link-error"></span>
