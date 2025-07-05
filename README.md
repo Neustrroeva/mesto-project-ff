@@ -6,4 +6,4 @@
 
 ## Ссылка на проект
 
-https://neustrroeva.github.io/mesto
+https://Neustrroeva.github.io/mesto-project-ff
