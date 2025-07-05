@@ -17,4 +17,16 @@ function handleEscClose(evt) {
   }
 }
 
-export { openPopup, closePopup, handleEscClose };
+function openImagePopup(name, link) {
+  const imagePopup = document.querySelector(".popup_type_image");
+  const image = imagePopup.querySelector(".popup__image");
+  const caption = imagePopup.querySelector(".popup__caption");
+
+  image.src = link;
+  image.alt = name;
+  caption.textContent = name;
+
+  openPopup(imagePopup);
+}
+
+export { openPopup, closePopup, handleEscClose, openImagePopup };

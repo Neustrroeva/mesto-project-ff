@@ -1,0 +1,27 @@
+.profile__image-edit-button {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile__image-edit-button::before {
+  content: '';
+  display: block;
+  width: 26px;
+  height: 26px;
+  background-image: url(../../../images/edit-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.profile__image:hover .profile__image-edit-button {
+  opacity: 1;
+}

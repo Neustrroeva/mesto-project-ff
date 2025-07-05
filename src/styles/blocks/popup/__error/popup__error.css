@@ -1,0 +1,19 @@
+.popup__error {
+  display: none;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ff0000;
+  margin-top: 5px;
+  min-height: 15px;
+}
+.popup__error_visible {
+  display: block;
+}
+.popup__input_type_error {
+  border: 1px solid #ff0000;
+}
+.popup__button_disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: default;
+}
