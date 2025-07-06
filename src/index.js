@@ -27,7 +27,10 @@ const editPopup = document.querySelector(".popup_type_edit");
 const newCardPopup = document.querySelector(".popup_type_new-card");
 const avatarPopup = document.querySelector(".popup_type_edit-avatar"); 
 const popups = document.querySelectorAll(".popup");
+
 const imagePopup = document.querySelector(".popup_type_image");
+const photoPopupImage = imagePopup.querySelector(".popup__image");
+const captionPopupImage = imagePopup.querySelector(".popup__caption");
 
 const profileTitle = document.querySelector(".profile__title");
 const profileDescription = document.querySelector(".profile__description");
@@ -53,6 +56,13 @@ const validationConfig = {
   errorClass: 'popup__error_visible',
 };
 
+function openImagePopup(cardData) {
+  photoPopupImage.src = cardData.link;
+  photoPopupImage.alt = cardData.name;
+  captionPopupImage.textContent = cardData.name;
+  openPopup(imagePopup);
+};
+
 let userId;
 
 Promise.all([getUserInfo(), getInitialCards()])
@@ -63,11 +73,11 @@ Promise.all([getUserInfo(), getInitialCards()])
     profileImage.style.backgroundImage = `url(${userData.avatar})`;
 
     for (let i = cards.length - 1; i >= 0; i--) {
-      const cardElement = createCard(cards[i], userId);
+      const cardElement = createCard(cards[i], userId, openImagePopup);
       cardsList.append(cardElement);
     }
   })
-  .catch((err) => console.log(err));
+  .catch((err) => console.log('Ошибка загрузки данных:',err));
 
 editProfileButton.addEventListener("click", () => {
   nameInput.value = profileTitle.textContent;
@@ -123,7 +133,7 @@ addCardForm.addEventListener("submit", function (evt) {
 
   addCard(titleInput.value, linkInput.value)
     .then((newCard) => {
-      const cardElement = createCard(newCard, userId);
+      const cardElement = createCard(newCard, userId, openImagePopup);
       cardsList.prepend(cardElement);
       closePopup(newCardPopup);
       addCardForm.reset();
@@ -160,16 +170,5 @@ popups.forEach((popup) => {
     }
   });
 });
-
-function openImagePopup(name, link) {
-  const photoPopupImage = imagePopup.querySelector(".popup__image");
-  const captionPopupImage = imagePopup.querySelector(".popup__caption");
-
-  photoPopupImage.src = link;
-  photoPopupImage.alt = name;
-  captionPopupImage.textContent = name;
-
-  openPopup(imagePopup);
-}
 
 enableValidation(validationConfig);

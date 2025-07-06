@@ -7,34 +7,22 @@ const config = {
 };
 
 const handleResponse = (res) => {
-  return res.json().then((data) => {
-    if (res.ok) {
-      return data;
+    if (!res.ok) {
+      return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
     }
-    return Promise.reject(`Ошибка: ${res.status} - ${data.message || res.statusText}`);
-  });
+    return res.json();
 };
 
 const getUserInfo = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers
-  })
-    .then(handleResponse)
-    .catch((err) => {
-      console.error('Ошибка getUserInfo:', err);
-      throw err;
-    });
+  }).then(handleResponse);
 };
 
 const getInitialCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers
-  })
-    .then(handleResponse)
-    .catch((err) => {
-      console.error('Ошибка getInitialCards:', err);
-      throw err;
-    });
+  }).then(handleResponse);
 };
 
 const editProfile = (name, about) => {
@@ -42,12 +30,7 @@ const editProfile = (name, about) => {
     method: 'PATCH',
     headers: config.headers,
     body: JSON.stringify({ name, about })
-  })
-    .then(handleResponse)
-    .catch((err) => {
-      console.error('Ошибка editProfile:', err);
-      throw err;
-    });
+  }).then(handleResponse);
 };
 
 const addCard = (name, link) => {
@@ -55,48 +38,28 @@ const addCard = (name, link) => {
     method: 'POST',
     headers: config.headers,
     body: JSON.stringify({ name, link })
-  })
-    .then(handleResponse)
-    .catch((err) => {
-      console.error('Ошибка addCard:', err);
-      throw err;
-    });
+  }).then(handleResponse);
 };
 
 const deleteCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/${cardId}`, {
     method: 'DELETE',
     headers: config.headers
-  })
-    .then(handleResponse)
-    .catch((err) => {
-      console.error('Ошибка deleteCard:', err);
-      throw err;
-    });
+  }).then(handleResponse);
 };
 
 const likeCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: 'PUT',
     headers: config.headers
-  })
-    .then(handleResponse)
-    .catch((err) => {
-      console.error('Ошибка likeCard:', err);
-      throw err;
-    });
+  }).then(handleResponse);
 };
 
 const unlikeCard = (cardId) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardId}`, {
     method: 'DELETE',
     headers: config.headers
-  })
-    .then(handleResponse)
-    .catch((err) => {
-      console.error('Ошибка unlikeCard:', err);
-      throw err;
-    });
+  }).then(handleResponse);
 };
 
 const updateAvatar = (avatarLink) => {
@@ -104,12 +67,7 @@ const updateAvatar = (avatarLink) => {
     method: 'PATCH',
     headers: config.headers,
     body: JSON.stringify({ avatar: avatarLink })
-  })
-    .then(handleResponse)
-    .catch((err) => {
-      console.error('Ошибка updateAvatar:', err);
-      throw err;
-    });
+  }).then(handleResponse);
 };
 
 export { getUserInfo, getInitialCards, editProfile, addCard, deleteCard, likeCard, unlikeCard, updateAvatar };

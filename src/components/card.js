@@ -1,7 +1,6 @@
 import { deleteCard as apiDeleteCard, likeCard, unlikeCard } from "./api.js";
-import { openImagePopup } from "./modal.js";
 
-function createCard(cardData, userId) {
+function createCard(cardData, userId, onOpenImagePopup) {
   const template = document.querySelector("#card-template");
   if (!template) throw new Error("Не найден шаблон карточки");
 
@@ -44,6 +43,10 @@ function createCard(cardData, userId) {
         likeCounter.textContent = updatedCard.likes.length;
       })
       .catch(err => console.log(err));
+  });
+
+  cardImage.addEventListener("click", () => {
+    onOpenImagePopup(cardData);
   });
 
   return cardElement;
